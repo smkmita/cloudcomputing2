@@ -1,0 +1,88 @@
+
+INSTALL PAKET LAMPP STACK DI UBUNTU SERVER 24 lts (AWS CLOUD) :
+(versi php 8.3.6)
+
+
+1) Ubah timezone ke +07.00 :
+   [cek dulu timezone saat ini]
+   #timedatectl
+   [lalu ubah ke zona asia/jakarta]
+   #sudo timedatectl set-timezone Asia/Jakarta
+
+2) Install Apache :
+   #sudo apt update && apt upgrade
+   #sudo apt install apache2
+   [cek status apache sudah running apa blm]
+   #sudo systemctl status apache2
+   [Lakukan pengujian apache, akses ip servernya]
+
+3) Install PHP :
+   #sudo apt install php php-mysql php-common php-cli php-json php-intl php-mbstring php-zip php-gd php-curl libapache2-mod-php 
+   [restart service apache terlebih dahulu]
+   #sudo systemctl restart apache2
+   [Lakukan pengujian php apakah sudah jalan, masuk ke folder html]
+   #cd /var/www/html
+   [buat file info.php]
+   #sudo touch info.php
+   [edit isi file tersebut]
+   #sudo nano info.php
+   [isikan skrip berikut, lalu simpan dan keluar]
+   #<?php phpinfo(); ?>
+   [Lakukan pengujian lagi, akses ip servernya]
+
+4) Install Database mysql
+   #sudo apt install mariadb-server 
+
+*) Install PHPMyadmin :
+   #sudo apt update
+   #sudo apt install phpmyadmin
+   [ikuti petunjuk smpai finish]
+
+*) Kemudian agar bisa msuk mysql lewat phpmyadmin, maka lakukan ubah password pada user root melalui terminal mysql :
+   Login ke mysql #sudo mysql -u root
+   Lalu :
+   #ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_passwor';
+  
+    Selesai, silahkan coba login ke phpmyadmin
+	
+4) clone repository dari git ke folder html
+   #sudo git clone [link-repo]
+   [impor db ke mysql secara manual]
+    #sudo mysql -u root
+    #show databases; 
+    #CREATE DATABASE [nama-db]
+    #show databases; 	--> utk memastikan database sudah dibuat
+    #exit		--> kelur dari database
+   [proses import ke database, pstikan sudah msuk ke direktori tempat menyimpan file sql]
+    #sudo mysql -u root [db-tujuan] < [file-db.sql]
+   [atur pengaturan database, cari file konfig database atau file .env]
+    
+
+5) Jika modul mod_rewrite blm aktif maka aktifkan :
+	#sudo a2enmod rewrite 
+	#sudo systemctl restart apache2
+	
+
+aplikasi jalan namun tidak bisa ke menu lainnya 'not found 404'
+(penyebabnya krn file htaccess nya tdk jalan, msh blm tau sebabnya),namun bisa disiasati dgn cara ditambahi index.php/login
+
+Solusi tepat : copas file htaccess nya aplikasi SASIS (working)
+file htaccess bawaannya yg tdk terbaca oleh server
+
+
+--------------------PENYEBAB HTACCESS TIDAK JALAN----------------------
+WAJIB AllowOverride ALL:
+#sudo nano /etc/apache2/apache2.conf
+
+cari bagian :
+
+<Directory /var/www/>
+            Options Indexes FollowSymLinks
+            AllowOverride None	-->jadi All
+            Require all granted
+</Directory>
+--------------------PENYEBAB HTACCESS TIDAK JALAN----------------------
+
+	
+	
+	
