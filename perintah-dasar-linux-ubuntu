@@ -1,0 +1,75 @@
+PERINTAH DASAR LINUX UBUNTU/DEBIAN:
+--------------------------------------------------
+#sudo su 	-> masuk ke root
+#ls -l		-> tampilkan isi file/folder beserta hak akses
+#ls -la		-> tampilkan isi file/folder yg tersembunyi
+#rm		-> hapus file
+#rm -r		-> hapus folder dan isinya
+#rmdir		-> hapus folder kosong
+#cp 		  -> copy file		format: $cp [file-asal] [lokasi-tujuan]
+#mv		  -> move/pindah file atau rename file
+#cd ..		-> pindah ke folder atasnya
+pwd      -> melihat posisi difolder apa saat ini
+chmod    -> ubah hak akses file/folder
+chown     ->ubah kepemilikan file/folder
+
+#dpkg --list	-> lihat paket yg terintall
+#df --total	-> lihat disk usage tiap partisi/mount dan total kapasitas
+#df -h		-> lihat mounting drive
+#fdisk -l	-> lihat nama device dan pembagian partisinya beserta size
+#./*.run	-> eksekusi file extensi 'run"
+#dpkg -i	-> eksekusi file extensi 'deb'
+#umount -f	-> unmount paksa
+#umount -l	-> unmount jika msh sibuk namun sdh tdk ada proses
+#find . -name *tes*	-> mncri file di folder yg aktif dengan sensitifitas sesuai yg diketik (file nma Tes tdk akn dicari)
+#find . -iname *tes*	-> mncri file di folder yg aktif tnp sensitifikas hrf besar kecil
+#find / -name *tes*	-> mncri file di seluruh folder harddisk
+#find . -type f -iname \*.jpg -delete	->menghapus file extensi jpg secara serentak di folder & subfolder bawahnya
+#find . -type f -iname \*.jpg 			->mencari file extensi jpg di folder & subfolder bawahnya
+#locate -i [nama file]	-> mncari file metode locate, -i artinya casesensitif tdk peduli hrf bsar/kcl
+#umount -a 		-> unmount semua drive
+#blkid 			-> cek UUID FD/HDD
+#groups <nama_user>	-> cek user ikut grup apa
+#cat /etc/passwd	-> cek nama2 user yg ada
+#cat /etc/group	-> cek nama2 grup yg ada
+#sudo dpkg -i [nama-aplikasi].deb
+#service smbd restart		->  restar servis samba
+#passwd				-> ubah password system user yg aktif
+#ubah ip static		-> root@ubuntu:~# ifconfig eth1 192.168.10.20 netmask 255.255.255.0
+#systemctl status [nama_service] 	--> cek status service yg berjalan
+#date -s 10:00:00		--> ubah jam 
+#sudo dhclient -v		--> Renew IP Address DHCP
+#sudo netplan apply	--> menerapkan pergantian iP address static
+#chmod 777 */*         --> ubah hak akses file di semua subfolder
+#chmod -R 777 *			--> ubah hak akses file di semua file/folder/subfolder
+#chgrp [nama-grup] [nama_file]	--> ubah nama grup file/folder isi * utk semua file
+#chown -hR [nama-user] *		--> ubah nama pemilik di smua folder dan subfolder
+#chown [namauser_baru]:[namagrup_baru] [nama-folder/file]		--> ubah nama pemilik di smua folder dan subfolder dgn nama tertentu
+#sudo mount /dev/sdb1 /media/newhd	-> mount drive/hdd ke folder tertentu.
+#find /home -iname *.jpg > hasil.txt 	-> mencari file format jpg di folder home lalu hasil disimpan ke file hasil.txt
+#echo > file1.txt			--> membuat file kosong
+#echo "Lagi Latihan membuat File" > file1.txt		--> membuat file beserta isi textnya
+#cat > file1.txt			--> membuat file pakai metode cat
+#htop		--> utk cek info penggunaan resource CPU dan RAM secara realtime (bisa juga #top) sperti taskmanager di windows
+#lscpu		--> cek spek processor (bisa juga nproc)
+#free -h 	--> cek penggunaan dan sisa RAM
+#unzip [file.zip] -d [lokasi folder]		--> unzip file ke folder tertentu (slbmnya hrs sdh terinstall app unzip)
+#timedatectl	->lihat timezone saat ini
+#timedatectl list-timezones --> lihat daftar timezone
+#timedatectl set-timezone Asia/Bangkok  -> ubah ke timezone +7
+
+[UBAH NAMA HOSTNAME]
+#sudo nano /etc/hostname -> ubah nama server yg diinginkan
+#sudo nano /etc/hosts -> ubah di baris 127.0.0.1 [nama_host_baru]
+#sudo hostnamectl set-hostname [nama_host_baru]
+
+
+
+
+
+---------------------SHORTCUT TEXT EDITOR NANO---------------------
+Alt+A	= seleksi text
+Alt+6	= copy
+Ctrl+U	= paste
+Ctrl+X 	= exit
+Ctrl+O	= simpan
