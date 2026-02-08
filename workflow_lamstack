@@ -31,17 +31,32 @@ INSTALL PAKET LAMPP STACK DI UBUNTU SERVER 24 lts (AWS CLOUD) :
    [Lakukan pengujian lagi, akses ip servernya]
 
 4) Install Database mysql
-   #sudo apt install mariadb-server 
+   #sudo apt install mariadb-server
+
+5) Install PHPMyadmin :
+   #sudo apt install phpmyadmin
 	
-5) clone repository dari git ke folder html
+5) clone/pull repository dari git ke folder html :
+   Pastikan sdh di dalam folder /var/www/html, sblm melakukan pull git, jika blm ketik :
+   #cd /var/www/html
+   Lalu mulai proses pull git :
    #sudo git clone [link-repo]
-   [impor db ke mysql secara manual]
-    #sudo mysql -u root
-    #show databases; 
-    #CREATE DATABASE [nama-db]
-    #show databases; 	--> utk memastikan database sudah dibuat
-    #exit		--> kelur dari database
-   [proses import ke database, pstikan sudah msuk ke direktori tempat menyimpan file sql]
-    #sudo mysql -u root [db-tujuan] < [file-db.sql]
+   Jika sdh bisa langsung coba akses di browser, hrusnya sdh tampil halaman webnya
+
+   Web yg dipull ada 2 yakni (Dino Wedding & Simple Landing Page)
+
+Lanjut, konfig subdomain agar url lebih cantik (tdk akses ip public vps/ec2 nya)
+
+6) Login ke Jagoan hosting, arahkan ke menu DNS Setting, tambah  A Record, isikan subdomain bebas, isikan ip public vps/ec2 nya. selesai
+
+
+JIKA WEB DARI PANITIA ADA DATABASENYA , MAKA Lakukan hal ini :
+
+7) Ubah Passoword mysql terlebih dahulu:
+    #mysql -u root
+	Lalu ketik:
+	#ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';		->[new_passowrd = ketik bebas yg mudah saja], jgn lupa akhiri dgn tnda ; sblm di enter
+8) Login ke PHPMyAdmin
+
    [atur pengaturan database, cari file konfig database atau file .env]
 	
