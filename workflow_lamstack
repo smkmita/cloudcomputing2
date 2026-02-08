@@ -63,13 +63,6 @@ INSTALL PAKET LAMPP STACK DI UBUNTU SERVER 24 lts (AWS CLOUD) :
 	#sudo systemctl restart apache2
 	
 
-aplikasi jalan namun tidak bisa ke menu lainnya 'not found 404'
-(penyebabnya krn file htaccess nya tdk jalan, msh blm tau sebabnya),namun bisa disiasati dgn cara ditambahi index.php/login
-
-Solusi tepat : copas file htaccess nya aplikasi SASIS (working)
-file htaccess bawaannya yg tdk terbaca oleh server
-
-
 --------------------PENYEBAB HTACCESS TIDAK JALAN----------------------
 WAJIB AllowOverride ALL:
 #sudo nano /etc/apache2/apache2.conf
