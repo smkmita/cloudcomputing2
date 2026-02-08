@@ -1,16 +1,18 @@
+WAJIB BUKA PORT DI GRUP KEAMANAN
+- Tambahkan aturan masuk utk port PORT 9090 dan 9100 izinkan  semua ip
+
 LAKUKAN INI DI SERVER WEB YG AKAN DIMONITORING
 ====INSTALLASI NODE EXPORTER DI SERVER TARGET YG AKAN DIMONITORING======
 Sebelum melakukan installasi node exporter, kita akan mengunduh package binary/node exporter dahulu. Gunakan perintah berikut:
-# apt update -y
-# apt install wget curl sudo tar nano
+# sudo apt update -y
 # wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
 
-Selanjutnya, ekstrak paket node exporter dan pindahkan pada direktori /usr/local/bin.
+Selanjutnya, ekstrak paket node exporter dan pindahkan pada direktori /usr/local/bin :
 # tar xvf node_exporter-*.tar.gz
 # cd node_exporter-1.7.0.linux-amd64
 # sudo cp node_exporter /usr/local/bin
 
-Apabila file node exporter telah dipindahkan ke usr/bin, maka kita perlu melakukan pembuatan user node exporter dan melakukan set binary mode ke user node exporter
+Apabila file node exporter telah dipindahkan ke usr/bin, maka kita perlu melakukan pembuatan user node exporter dan melakukan set binary mode ke user node exporter :
 # sudo useradd --no-create-home --shell /bin/false node_exporter
 # sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
 
@@ -43,6 +45,7 @@ Untuk memulai node exporter, Anda perlu menjalankan daemon-reload dan mengaktifk
 # sudo systemctl start node_exporter
 
 Sampai langkah ini, proses installasi node exporter telah selesai dilakukan. Untuk memastikan node exporter telah berjalan, kita dapat mengakses halaman website  http://ip_server:9100/metrics
+JANGAN LUPA BUKA PORT 9100 & 9090
 
 INSTALASI PROMETHEUS
 Pada awal installasi prometheus, hal yang perlu dilakukan adalah melakukan pembuatan user dan group untuk mencegah adanya unauthorized access, untuk user akan diberikan nama prometheus.
@@ -72,7 +75,7 @@ Pindahkan konfigurasi file prometheus dan sesuaikan permission folder/filenya.
 # sudo chown prometheus:prometheus /etc/prometheus
 # sudo chown -R prometheus:prometheus /etc/prometheus/consoles
 # sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
-# sudo chown -R prometheus:prometheus /var/lib/Prometheus
+# sudo chown -R prometheus:prometheus /var/lib/prometheus
 
 File konfigurasi prometheus terdapat pada /etc/prometheus/prometheus.yml, kita perlu melakukan konfigurasi pada file prometheus agar prometheus dapat terhubung dengan node exporter dan grafana.
 # sudo nano /etc/prometheus/prometheus.yml
@@ -113,11 +116,11 @@ WantedBy=multi-user.target
 Apabila file systemd prometheus telah dibuat, langkah selanjutnya adalah mengaktifkan service prometeus melalui systemd.
 # sudo systemctl daemon-reload
 # sudo systemctl enable prometheus
-# sudo systemctl start Prometheus
+# sudo systemctl start prometheus
 
 Installasi Prometheus telah selesai, kita dapat mengakses halaman prometeus melalui browser http://ip_server:9090/graph
 Selanjutnya login ke server monitoring utk menginstall Grafana.
-
+JANGAN LUPA BUKA PORT 9100 & 9090
 
 
 =====LAKUKAN INI DI SERVER MONITORING BUKAN DI SERVER YG DIMONITORING========
@@ -127,10 +130,10 @@ Grafana digunakan sebagai visualisasi dashboard, data yang dikumpulkan dan diana
 
 Untuk installasi Grafana, tambahkan terlebih dahulu repository dari official Grafana
 Buat folder ini :
-#sudo mkdir /etc/yum.repos.d
+# sudo mkdir /etc/yum.repos.d
 
 Isi file repository dengan repository grafana sebagai berikut: 
-#nano /etc/yum.repos.d/grafana.repo
+# sudo nano /etc/yum.repos.d/grafana.repo
 Copas skrip ini di file tersebut, lalu simpan :
 ------------------copas-skrip-dibawah-ini--------------
 [grafana]
@@ -146,28 +149,26 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 Lalu simpan dan keluar dari text editor nano.
 
 Setelah menambahkan repository grafana, kita perlu menambahkan GPG key dari grafana:
-#sudo mkdir -p /etc/apt/keyrings/
-#wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
+# sudo mkdir -p /etc/apt/keyrings/
+# wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
 
 Mulai proses penambahan repository:
-#echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+# echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 
-#sudo apt update
+# sudo apt update
 
-#sudo apt install Grafana
+# sudo apt install grafana
 
 Aktifkan service Grafana:
-#sudo systemctl start grafana-server
-
-Cek status :
-#sudo systemctl status grafana-server
+# sudo systemctl start grafana-server
 
 Enable service:
-#sudo systemctl enable grafana-server
+# sudo systemctl enable grafana-server
 
 FINISH: coba akses di browser = http://ip_address:3000
 user: admin
 pass: admin
+JANGAN LUPA BUKA PORT 3000
 
 [Menambahkan Server ke Sistem Monitoring]
 Setelah proses installasi semua tools selesai, langkah yang perlu dilakukan selanjutnya adalah menambahkan VPS yang sudah terinstall node exporter ke dashboard grafana.
