@@ -50,13 +50,24 @@ Lanjut, konfig subdomain agar url lebih cantik (tdk akses ip public vps/ec2 nya)
 6) Login ke Jagoan hosting, arahkan ke menu DNS Setting, tambah  A Record, isikan subdomain bebas, isikan ip public vps/ec2 nya. selesai
 
 
-JIKA WEB DARI PANITIA ADA DATABASENYA , MAKA Lakukan hal ini :
+LAKUKAN INI JIKA INGIN DEPLOY WEB DARI PANITIA, JIKA WEB NYA ADA DATABASENYA :
 
 7) Ubah Passoword mysql terlebih dahulu:
     #mysql -u root
 	Lalu ketik:
-	#ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';		->[new_passowrd = ketik bebas yg mudah saja], jgn lupa akhiri dgn tnda ; sblm di enter
+	#ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';		->[new_passowrd = ketik bebas yg mudah saja], jgn lupa akhiri dgn tnda ; disetiap akhir perintah mysql
+    Kemudian keluar dari mysql, ketik: exit [enter]
 8) Login ke PHPMyAdmin
+    Akses di browser, http://[ip_server]/phpmyadmin
+    Login user: root
+    Pass : yg tadi sdh diubah di mysql
+    Setelah login buat database baru nama bebas.
+	Lalu import database nya dari file *.sql
+    Lalu ubah pengaturan di file .env yg ada di dalam folder aplikasinya (var/www/html/..)
+    yg perlu di UBAH :
+	APP_URL=http://localhost  	->ubah tulisan localhost sesuai ip server
+	DB_DATABASE=laravel			->laravel= ganti sesuai nama database yg sdh dibuat di phpmyadmin tadi
+	DB_USERNAME=root			->tetap root
+	DB_PASSWORD=				->isi password yg sdh diubah di mysql tadi	
 
-   [atur pengaturan database, cari file konfig database atau file .env]
-	
+	Simpan, dan keluar, dari sini seharusnya web sdh bisa diakses, jika nama file .env ada tambhan tulisannya misal: .env.example, maka wajib direname dulu menjadi .env (rename file lihat perintah dasar linux)
