@@ -32,20 +32,8 @@ INSTALL PAKET LAMPP STACK DI UBUNTU SERVER 24 lts (AWS CLOUD) :
 
 4) Install Database mysql
    #sudo apt install mariadb-server 
-
-*) Install PHPMyadmin :
-   #sudo apt update
-   #sudo apt install phpmyadmin
-   [ikuti petunjuk smpai finish]
-
-*) Kemudian agar bisa msuk mysql lewat phpmyadmin, maka lakukan ubah password pada user root melalui terminal mysql :
-   Login ke mysql #sudo mysql -u root
-   Lalu :
-   #ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_passwor';
-  
-    Selesai, silahkan coba login ke phpmyadmin
 	
-4) clone repository dari git ke folder html
+5) clone repository dari git ke folder html
    #sudo git clone [link-repo]
    [impor db ke mysql secara manual]
     #sudo mysql -u root
@@ -56,26 +44,4 @@ INSTALL PAKET LAMPP STACK DI UBUNTU SERVER 24 lts (AWS CLOUD) :
    [proses import ke database, pstikan sudah msuk ke direktori tempat menyimpan file sql]
     #sudo mysql -u root [db-tujuan] < [file-db.sql]
    [atur pengaturan database, cari file konfig database atau file .env]
-    
-
-5) Jika modul mod_rewrite blm aktif maka aktifkan :
-	#sudo a2enmod rewrite 
-	#sudo systemctl restart apache2
-	
-
---------------------PENYEBAB HTACCESS TIDAK JALAN----------------------
-WAJIB AllowOverride ALL:
-#sudo nano /etc/apache2/apache2.conf
-
-cari bagian :
-
-<Directory /var/www/>
-            Options Indexes FollowSymLinks
-            AllowOverride None	-->jadi All
-            Require all granted
-</Directory>
---------------------PENYEBAB HTACCESS TIDAK JALAN----------------------
-
-	
-	
 	
