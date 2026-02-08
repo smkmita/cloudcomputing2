@@ -1,0 +1,41 @@
+MEMBUAT INFRASTRUKTUR & TOPOLOGI :
+------------------------------------------
+1) Pilih Region sesuai soal
+2) Create VPC
+	- buat 2 zona (AZ)
+	- buat 2 subnet
+		subnet public1=192.168.1.0/24
+		subnet public2=192.168.2.0/24
+		subnet private1= 192.168.3.0/24
+		subnet private1= 192.168.4.0/24
+
+3) buat grup keamanan terlebih dahulu
+	- Keamanan utk webserver (buka port ssh dan http)
+		- Nama keamanan = webserver-security
+		- buka akses masuk port = ssh(22) & http(80)
+		- kemananan utk RDS (buka port mysql 3306)
+		- kemananan utk EFS (buka port NFS)
+
+4) Create EFS
+
+5) Create S3
+	
+6) Create RDS
+	
+7) Create EC2 = 2 unit di zona berbeda utk load balance.
+	Nama EC2 - 1 = ec2-monitoring (subnet public 1)
+	Nama EC2 - 2 = ec2-webserver (subnet public 2)
+	- AMI= Ubuntu 22
+	- kemanan grup pilih webserver yang tdi sudah dibuat (webserver-security)
+	- create keypar format .ppk
+
+8) buat aturan IAM
+	- utk akses ke RDS
+	- utk akses ke EFS
+	- utk akses ke S3
+
+7) Install Webserver di EC2-Webserver (langkah kerja lihat WORKFLOW LAMSTACK.txt)
+
+8) Install aplikasi monitoring server Grafana di EC2-Monitoring (lihat WORKFLOW GRAFANA.txt)
+
+9) Konfigurasi S3, EFS & RDS (lihat WORKFLOW S3-EFS-RDS.txt)

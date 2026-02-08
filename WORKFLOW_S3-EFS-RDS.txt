@@ -1,0 +1,79 @@
+--------KONFIG RDS-----its work
+Buat db di instance RDS dulu, catat :
+db_user:
+db_pass:
+RDS endpoint (sbg db_host):
+
+Pastikan IAM sudah dikonfig
+saat buat RDS lngsung pilih koneksikan ke EC2-Webserver agar dibuatkan grup keamanan langsung.
+
+Lakukan konfigurasi PHPMyadmin di EC2 nya
+
+Tambahkan skrip ini di file /etc/phpmyadminconfig.inc.php, di bawah tulisan $i++ :
+
+/* Server Baru (Remote) */
+$i++;
+$cfg['Servers'][$i]['host'] = 'IP_ADDRESS_SERVER_REMOTE'; // Ganti dengan IP atau Hostname
+$cfg['Servers'][$i]['port'] = '3306'; // Port default 3306
+$cfg['Servers'][$i]['user'] = 'USER-DB'; // Ganti dengan user remote
+$cfg['Servers'][$i]['password'] = 'PASSWORED-DB'; // Ganti dengan password
+$cfg['Servers'][$i]['auth_type'] = 'config'; // Menggunakan config agar tidak login ulang
+$cfg['Servers'][$i]['verbose'] = 'RDS Aurora'; // Nama tampilan di dropdown
+
+
+------------------------------------------------------------------------------
+
+-----------------HUBUNGKAN S3 BUCKET KE EC2:-----------its work
+pastikan IAM sudah diatur
+
+Install awscli
+# sudo apt install awscli
+
+Tampilkan bucket di s3:
+# aws s3 ls
+
+Cth copy file dari bucket ke lokal:
+# aws s3 cp s3://<nama_bucket>/<lokasi-folder/nama-file> <tujuan>
+
+Cth copy file dari lokal ke bucket:
+# aws s3 cp <tujuan> s3://<nama_bucket>/<lokasi-folder/nama-file>
+
+
+
+--------WORKFLOW EFS-------its work
+Pastikan IAM sudah dikonfig
+[install nfs-client]
+#sudo apt install nfs-client
+[buat folder NFS difoler /home/nfs]
+#sudo mkdir /home/nfs
+[copas skrip mount by ip di menu attach by ip(sesuaiakan ip efnya) ]
+#sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 172.30.9.120:/ nfs
+
+Buat mounting otomatis di fstab :
+#sudo nano /etc/fstab
+
+Lalu tambahkan skrip ini dibawah sendiri (ip sesuaikan dengan ip efs) :
+
+172.30.9.120:/ /home/nfs nfs defaults 0 0
+
+Simpan dan keluar dari nano.
+
+
+
+----VIRTUAL HOST KE MOUTING NFS----its work
+JIKA INGIN MENGARAHKAN FOLDER WEB KE EFS, Maka lakukan step ini. Jika tidak maka lewati sja.
+
+<VirtualHost *:80>
+    ServerName nfs.domainanda.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/nfs_site
+
+    <Directory /var/www/nfs_site>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/nfs_error.log
+    CustomLog ${APACHE_LOG_DIR}/nfs_access.log combined
+</VirtualHost>
